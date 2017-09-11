@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:TemplateSelectorExample.Pages" xmlns:templateSelectors="clr-namespace:TemplateSelectorExample.DataTemplateSelectors;assembly=TemplateSelectorExample" x:Class="TemplateSelectorExample.Pages.TemplateSelectorExamplePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="searchResultTemplate">
+                <ViewCell>
+                    <Label Text="{Binding Title}" HorizontalOptions="Start" TextColor="Blue" />
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="locationResultTemplate">
+                <ViewCell>
+                    <Label Text="{Binding Title}" HorizontalOptions="End" TextColor="Red" />
+                </ViewCell>
+            </DataTemplate>
+            <templateSelectors:ItemTemplateSelector x:Key="itemTemplateSelector"
+                SearchResultTemplate="{StaticResource searchResultTemplate}"
+                LocationResultTemplate="{StaticResource locationResultTemplate}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <SearchBar Text="{Binding SearchText}"  SearchCommand="{Binding UpdateLocationAutoComplete}" />
+            <ListView x:Name="myListView" CachingStrategy="RecycleElement" ItemsSource="{Binding ListItems}" ItemTemplate="{StaticResource itemTemplateSelector}" IsRefreshing="{Binding IsBusy}" IsPullToRefreshEnabled="{Binding PullToRefresh}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
